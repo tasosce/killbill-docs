@@ -349,13 +349,17 @@ account = body.create('tutorial', nil, nil, options)
 ----
 import killbill
 
-killbill.configuration.base_uri = 'http://127.0.0.1:8080'
-killbill.configuration.username = 'admin'
-killbill.configuration.password = 'password'
+config = killbill.Configuration()
+# It's better to change the host variable from the configuration file to avoid http requests problems.
+config.host = 'http://http://127.0.0.1:8080'
+config.username = 'admin'
+config.password = 'password'
+config.api_key['X-Killbill-ApiKey'] = 'bob'
+config.api_key['X-Killbill-ApiSecret'] = 'lazar'
 
 account_api = killbill.api.AccountApi()
 body = killbill.models.account.Account(name='John Doe', currency='USD')
-account = account_api.create_account(body, 'tutorial', 'bob', 'lazar')
+account = account_api.create_account(body, 'tutorial')
 ----
 ++++
   </div>
